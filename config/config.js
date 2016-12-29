@@ -1,7 +1,7 @@
 const fs = require('fs')
 
-const mongodbConnectionIP = process.env.OPENSHIFT_MONGODB_IP || 'localhost'
-const mongodbConnectionPORT = process.env.OPENSHIFT_MONGODB_PORT || 27017
+const mongodbConnectionIP = process.env.OPENSHIFT_MONGODB_DB_IP || 'localhost'
+const mongodbConnectionPORT = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017
 const mongodbUser = 'm.diaz'
 const mongodbPassword = '100213..'
 
