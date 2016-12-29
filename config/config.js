@@ -1,10 +1,18 @@
 const fs = require('fs')
 
+const mongodbConnectionIP = process.env.OPENSHIFT_MONGODB_IP || 'localhost'
+const mongodbConnectionPORT = process.env.OPENSHIFT_MONGODB_PORT || 27017
+const mongodbUser = 'm.diaz'
+const mongodbPassword = '100213..'
+
+const hostIP = process.env.OPENSHIFT_NODEJS_IP || 'localhost'
+const hostPORT = process.env.OPENSHIFT_NODEJS_PORT || 3000
+
 const config = {
-  dbConnectionUrl : 'mongodb://127.0.0.1:27017/misol',
+  dbConnectionUrl : `mongodb://${mongodbUser}:${mongodbPassword}@${mongodbConnectionIP}:${mongodbConnectionPORT}/misol`,
   serverConnection:{
-    host:'0.0.0.0',
-    port:3000
+    host:hostIP,
+    port:hostPORT
   }
 }
 
