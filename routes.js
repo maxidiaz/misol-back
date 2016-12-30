@@ -4,6 +4,12 @@ const CategoryController = require('./controllers/CategoryController')
 const UserController = require('./controllers/UserController')
 
 const routes = [
+
+  {method:'GET',path:'/',handler(req,res){
+        res.file('./app/index.html')
+      }
+  },
+
   // Varieties
   {method:'POST',path:'/variety',config:VarietyController.save},
   {method:'GET',path:'/variety',config:VarietyController.list},
