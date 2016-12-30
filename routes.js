@@ -10,9 +10,7 @@ const routes = [
       }
   },
 
-  {
-        method: 'GET',
-        path: '/{filename*}',
+  {method: 'GET', path: '/{filename*}',
         config: {
             auth: false,
             cache: {
@@ -27,7 +25,7 @@ const routes = [
                 index: false
             }
         }
-    }
+    },
 
   // Varieties
   {method:'POST',path:'/variety',config:VarietyController.save},
