@@ -6,7 +6,7 @@ const UserController = require('./controllers/UserController')
 const apiPrefix = '/api'
 
 const routes = [
-  {method:'GET',path: apiPrefix + '/',handler(req,res){
+  {method:'GET',path: '/',handler(req,res){
         res.file('./app/index.html')
       }
   },
