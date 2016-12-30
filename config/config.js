@@ -1,8 +1,8 @@
 const fs = require('fs')
 
 const tls = {
-  key: fs.readFileSync('C:/Users/m.diaz/Proyectos/MiSol/keys/server.key'),
- cert: fs.readFileSync('C:/Users/m.diaz/Proyectos/MiSol/keys/server.crt')
+  key: fs.readFileSync('../keys/server.key'),
+ cert: fs.readFileSync('../keys/server.crt')
 }
 
 const mongodbConnectionIP = process.env.MONGODB_SERVICE_HOST || 'localhost'
