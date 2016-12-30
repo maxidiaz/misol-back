@@ -2,9 +2,9 @@
   "name": "hapiserver",
   "version": "1.0.0",
   "description": "",
-  "main": "api/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node --use_strict api/index.js",
+    "start": "node --use_strict index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
