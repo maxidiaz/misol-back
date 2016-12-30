@@ -1,6 +1,6 @@
 const hapi = require('hapi');
 const server = new hapi.Server();
-//const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const config = require('./config/config')
 const initDb = require('./initDb')();
 const corsHeaders = require('hapi-cors-headers');
