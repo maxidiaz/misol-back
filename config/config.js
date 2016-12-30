@@ -11,7 +11,7 @@ const hostIP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '10.1.93.19'
 const hostPORT = process.env.PORT || 8080
 
 const config = {
-  dbConnectionUrl : MONGODB_URI,
+  dbConnectionUrl : mongoURI,
   serverConnection:{
     port:hostPORT
   }
