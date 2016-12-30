@@ -6,15 +6,11 @@ const mongodbUser = 'm.diaz'
 const mongodbPassword = '100213..'
 
 const hostIP = process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '10.1.93.19'
-const hostPORT = process.env.OPENSHIFT_NODEJS_PORT || 8080
-
-console.log('OPENSHIFT_NODEJS_IP : ' + process.env.OPENSHIFT_NODEJS_IP)
-console.log('OPENSHIFT_NODEJS_PORT : ' + process.env.OPENSHIFT_NODEJS_PORT)
+const hostPORT = process.env.PORT || 8080
 
 const config = {
   dbConnectionUrl : `mongodb://${mongodbUser}:${mongodbPassword}@${mongodbConnectionIP}:${mongodbConnectionPORT}/misol`,
   serverConnection:{
-    host:hostIP,
     port:hostPORT
   }
 }
