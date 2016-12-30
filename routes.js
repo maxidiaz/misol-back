@@ -10,6 +10,25 @@ const routes = [
       }
   },
 
+  {
+        method: 'GET',
+        path: '/{filename*}',
+        config: {
+            auth: false,
+            cache: {
+                expiresIn: 24 * 60 * 60 * 1000,
+                privacy: 'public'
+            }
+        },
+        handler: {
+            directory: {
+                path: __dirname + '/app',
+                listing: false,
+                index: false
+            }
+        }
+    }
+
   // Varieties
   {method:'POST',path:'/variety',config:VarietyController.save},
   {method:'GET',path:'/variety',config:VarietyController.list},
