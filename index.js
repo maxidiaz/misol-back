@@ -9,7 +9,7 @@ mongoose.connect(config.dbConnectionUrl)
 
 server.connection(config.serverConnection)
 
-server.ext('onPreResponse', corsHeaders)
+//server.ext('onPreResponse', corsHeaders)
 
 server.register(require('./plugins'), (error)=>{
   if(error){
