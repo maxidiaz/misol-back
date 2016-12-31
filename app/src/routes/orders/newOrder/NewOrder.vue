@@ -64,7 +64,7 @@ import CountInputModal from '../../../components/CountInputModal.vue'
 import moment from 'moment'
 import FCMHelper from '../../../utils/FCMHelper'
 import config from '../../../config'
-import newOrderNotification from '../../../utils/Notifications'
+import {newOrderNotification} from '../../../utils/Notifications'
 
 export default {
   name: 'new-order',
