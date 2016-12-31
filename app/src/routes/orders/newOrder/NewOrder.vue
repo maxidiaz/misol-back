@@ -154,7 +154,7 @@ export default {
       this.order.status = 'pending'
       Orders.save(this.order, response => {
         //self.$socket.emit('new-order', response.body.data)
-        FCMHelper.sendNotification(newOrderNotification, response.body.data)
+        FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
         self.$router.push('/orders')
       })
     }

@@ -14,11 +14,8 @@ firebase.initializeApp(configFirebase)
 var messaging = firebase.messaging()
 
 messaging.setBackgroundMessageHandler(function (payload) {
-  var title = 'Nuevo pedido'
-  var options = {
-    body: 'Un nuevo pedido a nombre de ' + payload.data.name
-  }
-  return self.registration.showNotification(title, options)
+  var title = payload.notification.title
+  return self.registration.showNotification(title, payload.notification)
 })
 
 self.addEventListener('notificationclick', function(event) {
