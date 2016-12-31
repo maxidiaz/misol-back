@@ -1,0 +1,6 @@
+order status: {
+  pending,
+  inProgress,
+  finished,
+  done
+}
