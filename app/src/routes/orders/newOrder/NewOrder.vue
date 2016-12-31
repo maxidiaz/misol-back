@@ -64,6 +64,7 @@ import CountInputModal from '../../../components/CountInputModal.vue'
 import moment from 'moment'
 import FCMHelper from '../../../utils/FCMHelper'
 import config from '../../../config'
+import newOrderNotification from '../../../utils/Notifications'
 
 export default {
   name: 'new-order',
@@ -153,8 +154,8 @@ export default {
       this.order.status = 'pending'
       Orders.save(this.order, response => {
         //self.$socket.emit('new-order', response.body.data)
+        FCMHelper.sendNotification(newOrderNotification, response.body.data)
         self.$router.push('/orders')
-        FCMHelper.sendNotification()
       })
     }
   },
