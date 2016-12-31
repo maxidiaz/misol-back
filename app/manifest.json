@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "short_name": "Mi Sol",
   "name": "Mi Sol",
   "version": "v0.1",
@@ -30,7 +30,7 @@
       "src": "./assets/app/platform/android/res/drawable-xxxhdpi/appicon.png",
       "type": "image/png",
       "sizes": "192x192"
-    },
+    }
   ],
   "display": "standalone"
 }
