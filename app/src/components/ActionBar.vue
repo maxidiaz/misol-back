@@ -9,6 +9,7 @@
       </button>
       <transition name="slide">
         <a v-if="noHome" class="back-btn-container" v-on:click="goBack"><img src="assets/back-icon.png" class="back-btn"/></a>
+        <a v-if="!noHome" class="back-btn-container" v-on:click="goBack"><span class="glyphicon glyphicon-log-out back-btn"></span></a>
       </transition>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
@@ -45,6 +46,7 @@ export default {
   },
   methods: {
     goBack () {
+      this.hideCollapse()
       this.$router.back()
     },
     hideCollapse () {

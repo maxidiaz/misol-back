@@ -27,10 +27,15 @@ const update = (order, cb, cbError) => {
   Vue.http.put(restUrl + '/order', order).then(cb)
 }
 
+const remove = (order, cb, cbError) => {
+  Vue.http.delete(restUrl + '/order/' + order._id).then(cb)
+}
+
 export default {
   list,
   save,
   find,
   update,
-  listByDate
+  listByDate,
+  remove
 }

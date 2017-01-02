@@ -9,9 +9,10 @@ import StatisticMenu from './routes/statistic/StatisticMenu.vue'
 import DailyStats from './routes/statistic/DailyStats.vue'
 import StatsOnDate from './routes/statistic/StatsOnDate.vue'
 import Settings from './routes/settings/Settings.vue'
+import SignUp from './routes/signup/SignUp.vue'
 
 const routes = [
-  {path: '/', component: Home},
+  {path: '/', component: SignUp},
   {path: '/categories', component: CategoriesMenu},
   {path: '/varieties/:variety', component: Varieties},
   {path: '/orders', component: Orders},

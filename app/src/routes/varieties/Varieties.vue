@@ -37,6 +37,7 @@ import Category from '../../models/Category'
 import AddButton from '../../components/AddButton.vue'
 import NewVarietyForm from './components/NewVarietyForm.vue'
 import Utils from '../../utils/Utils'
+import BlockUI from '../../utils/BlockUI'
 
 export default {
   name: 'varieties',
@@ -52,9 +53,11 @@ export default {
     NewVarietyForm
   },
   beforeRouteEnter (to, from, next) {
+    BlockUI.showSpinner()
     Category.findByName(Utils.upperCaseFirstLetter(to.params.variety), response => {
       const selectedCategory = response.body[0]
       Variety.listBy(selectedCategory._id, response => {
+        BlockUI.hideSpinner()
         const varieties = response.body.data
         next(vm => {
           vm.selectedCategory = selectedCategory
@@ -75,9 +78,13 @@ export default {
     },
     removeVariety (variety) {
       const self = this
-      Variety.remove(variety._id, () => {
-        self.varieties.splice(self.varieties.indexOf(variety), 1)
-      })
+      this.$displayDialog('¿Estás seguro?', 'Se eliminará la variedad ' + variety.name + ' para siempre. Este proceso no se puede revertir.', () => {
+        self.$showSpinner()
+        Variety.remove(variety._id, () => {
+          self.$hideSpinner()
+          self.varieties.splice(self.varieties.indexOf(variety), 1)
+        })
+      }, function(){})
     }
   }
 }

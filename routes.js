@@ -49,6 +49,7 @@ const routes = [
   {method:'GET',path: apiPrefix + '/order/{id}',config:OrderController.find},
   {method:'PUT',path: apiPrefix + '/order',config:OrderController.update},
   {method:'GET',path: apiPrefix + '/order/date/{datetime}',config:OrderController.findByDate},
+  {method:'DELETE',path: apiPrefix + '/order/{id}',config:OrderController.remove},
 
   // Users
   {method:'POST',path: apiPrefix + '/user',config:UserController.save},

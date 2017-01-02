@@ -16,6 +16,7 @@
           <span v-on:click.stop="toggleDropdown($event)">°°°</span>
         </div>
         <ul class="dropdown-menu option-menu">
+          <li v-on:click.stop="removeOrder(order)"><a>Eliminar</a></li>
           <li v-on:click.stop="finishOrder(order)"><a>Finalizar</a></li>
         </ul>
       </div>
@@ -29,6 +30,7 @@
 <script>
 import AddButton from '../../components/AddButton.vue'
 import Orders from '../../models/Orders'
+import BlockUI from '../../utils/BlockUI'
 
 export default {
   name: 'orders',
@@ -50,8 +52,10 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
+    BlockUI.showSpinner()
     Orders.list({noDone: true}, response => {
         console.log(response)
+        BlockUI.hideSpinner()
         const orders = response.body.data
         next(vm => {
           vm.orders = orders
@@ -73,9 +77,19 @@ export default {
       $dropdownEl.dropdown('toggle')
       /* eslint-enable */
     },
+    removeOrder (order) {
+      const self = this
+      this.$displayDialog('¿Estás seguro?', 'El pedido se borrará para siempre. Este proceso no se puede revertir', () => {
+        self.$showSpinner()
+        Orders.remove(order, response => {
+          self.$hideSpinner()
+          self.orders.splice(self.orders.indexOf(order), 1)
+        })
+      }, function () {})
+    },
     finishOrder (order) {
       const self = this
-      this.$displayDialog('¿Estás seguro?', 'Al marcar el pedido como Finalizado se eliminará de la lista', () => {
+      this.$displayDialog('¿Estás seguro?', 'Al marcar el pedido como Finalizado se eliminará de la lista. Luego se podrá encontrar en el resumen del día', () => {
         order.status = 'done'
         Orders.update(order, response => {
           self.orders.splice(self.orders.indexOf(order), 1)

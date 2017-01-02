@@ -65,12 +65,14 @@ export default {
                 price: this.categoryPrice
             }
             this.$displayDialog('¿Estás seguro?', 'Se guardará una nueva variedad ' + newCategory.name + '.', function () {
+              self.$showSpinner()
               Category.save(newCategory, (rps) => {
-                  let categoryRps = rps.body.data
-                  categoryRps.path = Utils.toKebabCase(categoryRps.name)
-                  self.showWindow = false
-                  self.$emit('popupWindowClose')
-                  self.$emit('categorySaved', categoryRps)
+                self.$hideSpinner()
+                let categoryRps = rps.body.data
+                categoryRps.path = Utils.toKebabCase(categoryRps.name)
+                self.showWindow = false
+                self.$emit('popupWindowClose')
+                self.$emit('categorySaved', categoryRps)
               })
             }, true)
           } else {
@@ -81,12 +83,14 @@ export default {
               this.categoryToUpdate.name = Utils.upperCaseFirstLetter(this.categoryName)
               this.categoryToUpdate.price = this.categoryPrice
               this.$displayDialog('¿Estás seguro?','Se actualizarán los datos de la variedad ' +  this.categoryToUpdate.name, function() {
+                self.$showSpinner()
                 Category.update(self.categoryToUpdate, (rps) => {
-                    let categoryRps = rps.body.data
-                    categoryRps.path = Utils.toKebabCase(categoryRps.name)
-                    self.showWindow = false
-                    self.$emit('popupWindowClose')
-                    self.$emit('categoryUpdated', categoryRps)
+                  self.$hideSpinner()
+                  let categoryRps = rps.body.data
+                  categoryRps.path = Utils.toKebabCase(categoryRps.name)
+                  self.showWindow = false
+                  self.$emit('popupWindowClose')
+                  self.$emit('categoryUpdated', categoryRps)
                 })
               },true)
             }

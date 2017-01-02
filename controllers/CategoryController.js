@@ -1,9 +1,11 @@
 const Category = require('../models/Category')
+const THIS = 'CategoryController'
 
 const save = {
     handler(req, res) {
         const data = req.payload;
         const category = new Category(req.payload)
+        console.log(THIS + ' :: save : ' + category)
         category.save()
             .then(category => {
                 res({
@@ -31,10 +33,12 @@ const update = {
   handler (req, res) {
     console.log(req.payload)
     Category.findById(req.params.id, (err, category) => {
+      console.log(THIS + ' :: about to update : ' + category)
       const data = req.payload
       category.name = data.name
       category.price = data.price
       category.save().then(category => {
+        console.log(THIS + ' :: updated : ' + category)
           res({
               status: 'OK',
               data: category
@@ -62,6 +66,7 @@ const findByName = {
 
 const remove = {
     handler(req, res) {
+        console.log(THIS + ' :: remove : ' + req.params.id)
         res(Category.findOneAndRemove({
             "_id": req.params.id
         }))

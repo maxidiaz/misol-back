@@ -81,10 +81,20 @@ const findByDate = {
   }
 }
 
+const remove = {
+    handler(req, res) {
+        res(Order.findOneAndRemove({
+            "_id": req.params.id
+        }))
+    }
+}
+
+
 module.exports = {
     save,
     list,
     find,
     update,
-    findByDate
+    findByDate,
+    remove
 }

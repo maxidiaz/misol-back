@@ -16,16 +16,19 @@
 import OrdersComponent from '../orders/Orders.vue'
 import Orders from '../../models/Orders'
 import moment from 'moment'
+import BlockUI from '../../utils/BlockUI'
 
 export default {
   name: 'daily-status',
   beforeRouteEnter (to, from, next) {
     if (to.params.date) {
+      BlockUI.showSpinner()
       Orders.listByDate({
         date: moment.utc(to.params.date).format(),
         status: 'done'
       }, response => {
         console.log(response)
+        BlockUI.hideSpinner()
         const orders = response.body
         next(vm => {
           vm.orders = orders
@@ -49,7 +52,7 @@ export default {
       const today = moment.utc()
       const date = moment.utc(this.$route.params.date)
       if(today.date() == date.date() && today.month() == date.month() && today.year() == date.year()) {
-        return false        
+        return false
       } else {
         return date.format('DD/MM/YYYY')
       }

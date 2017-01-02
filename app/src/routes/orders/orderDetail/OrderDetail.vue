@@ -62,6 +62,7 @@
 <script>
 import Orders from '../../../models/Orders'
 import moment from 'moment'
+import BlockUI from '../../../utils/BlockUI'
 
 export default {
   name: 'order-detail',
@@ -73,7 +74,9 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
+    BlockUI.showSpinner()
     Orders.find(to.params.id, response => {
+      BlockUI.hideSpinner()
       const order = response.body[0]
       next(vm => {
         const datetime = moment(order.datetime)

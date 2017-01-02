@@ -1,4 +1,4 @@
-import Vue from 'vue'
+const Vue = require('vue')
 import App from './App.vue'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'

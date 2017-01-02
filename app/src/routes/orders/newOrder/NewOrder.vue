@@ -152,8 +152,10 @@ export default {
       this.order.price = this.total
       this.order.datetime = moment(this.date + ' ' + this.time).toDate()
       this.order.status = 'pending'
+      this.$showSpinner()
       Orders.save(this.order, response => {
         //self.$socket.emit('new-order', response.body.data)
+        self.$hideSpinner()
         FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
         self.$router.push('/orders')
       })
