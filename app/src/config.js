@@ -5,8 +5,7 @@ const configuration = {
     {name: 'Estadisticas', path: '/statistics'},
     {name: 'Ajustes', path: '/settings'}
   ],
-  //restUrl: 'https://misol.herokuapp.com/api',
-  restUrl: 'http://localhost:3000/api',
+  restUrl: process.env.NODE_ENV == 'production' ? 'https://misol.herokuapp.com/api' : 'localhost:3000/api',
   sandwichQuantity: [3, 6, 9, 12, 24, 36, 48, 60],
   showToast: true
 }
