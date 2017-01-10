@@ -27,6 +27,9 @@ export default {
   methods: {},
   components: {
     VSwitch
+  },
+  onBackAction () {
+    this.$router.push('/')
   }
 }
 </script>

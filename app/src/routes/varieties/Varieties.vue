@@ -86,6 +86,9 @@ export default {
         })
       }, function(){})
     }
+  },
+  onBackAction () {
+    this.$router.push('/categories')
   }
 }
 </script>

@@ -1,23 +1,25 @@
 import Vue from 'vue'
 import Config from '../config'
+import debounce from 'lodash/debounce'
 
 const restUrl = Config.restUrl
 
-const list = (cb, cbError) => {
-  Vue.http.get(restUrl + '/variety').then(cb)
-}
+const list = debounce((cb, cbError) => {
+  Vue.http.get(restUrl + '/variety').then(cb, cbError)
+}, 300)
 
-const listBy = (filter, cb, cbError) => {
-  Vue.http.get(restUrl + '/variety?filterBy=' + filter).then(cb)
-}
+const listBy = debounce((filter, cb, cbError) => {
+  Vue.http.get(restUrl + '/variety?filterBy=' + filter).then(cb, cbError)
+}, 300)
 
-const save = (variety, cb, cbError) => {
-  Vue.http.post(restUrl + '/variety', variety).then(cb)
-}
+const save = debounce((variety, cb, cbError) => {
+  variety.totalSold = 0
+  Vue.http.post(restUrl + '/variety', variety).then(cb, cbError)
+}, 300)
 
-const remove = (id, cb, cbError) => {
-  Vue.http.delete(restUrl + '/variety/' + id).then(cb)
-}
+const remove = debounce((id, cb, cbError) => {
+  Vue.http.delete(restUrl + '/variety/' + id).then(cb, cbError)
+}, 300)
 
 export default {
   list,

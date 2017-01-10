@@ -27,6 +27,7 @@ import AddButton from '../../components/AddButton.vue'
 import NewCategoryForm from './components/NewCategoryForm.vue'
 import Utils from '../../utils/Utils'
 import BlockUI from '../../utils/BlockUI'
+import ActionBarUtils from '../../components/ActionBarUtils'
 
 export default {
   name: 'categories-menu',
@@ -49,6 +50,8 @@ export default {
         vm.categories = categories
       })
     })
+  },
+  mounted () {
   },
   components: {
     RouterMenu,
@@ -86,6 +89,9 @@ export default {
         })
       }, true)
     }
+  },
+  onBackAction () {
+    this.$router.push('/')
   }
 }
 

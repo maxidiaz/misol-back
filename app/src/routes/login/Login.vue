@@ -1,106 +1,104 @@
 <template>
-<!--
-Below we include the Login Button social plugin. This button uses
-the JavaScript SDK to present a graphical Login button that triggers
-the FB.login() function when clicked.
--->
-
-<div id="status">
-</div>
+  <div class="container">
+    <div class="img-container">
+      <img src="/assets/appicon.png" alt="">
+    </div>
+    <div class="card">
+      <div class="row inputs-row">
+        <input type="email" v-model="user.email" class="form-control" placeholder="E-mail"/>
+      </div>
+      <div class="row inputs-row">
+        <input type="password" v-model="user.password" class="form-control" placeholder="Password"/>
+      </div>
+      <div class="row inputs-row">
+        <button type="button" v-on:click="login" class="btn btn-primary btn-signup">INGRESAR</button>
+      </div>
+      <div class="separator-row">
+        <div class="col-xs-5 or-separator separator-col"></div>
+        <div class="col-xs-2 separator-col">
+          <span style="font-size: 16px">o</span>
+        </div>
+        <div class="col-xs-5 or-separator separator-col"></div>
+      </div>
+      <div class="row">
+        <router-link :to="{path: '/signup'}" class="signup-link">Creá tu cuenta</router-link>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import Authentication from '../../utils/Authentication'
+
 export default {
-    data() {
-        return {}
-    },
-    computed: {},
-    created() {
-      // This is called with the results from from FB.getLoginStatus().
-      function statusChangeCallback(response) {
-          console.log('statusChangeCallback');
-          console.log(response);
-          // The response object is returned with a status field that lets the
-          // app know the current login status of the person.
-          // Full docs on the response object can be found in the documentation
-          // for FB.getLoginStatus().
-          if (response.status === 'connected') {
-              // Logged into your app and Facebook.
-              testAPI();
-          } else if (response.status === 'not_authorized') {
-              // The person is logged into Facebook, but not your app.
-              document.getElementById('status').innerHTML = 'Please log ' +
-                  'into this app.';
-          } else {
-              // The person is not logged into Facebook, so we're not sure if
-              // they are logged into this app or not.
-              document.getElementById('status').innerHTML = 'Please log ' +
-                  'into Facebook.';
-          }
+  name: 'login',
+  data() {
+      return {
+        user: {
+          email: '',
+          password: ''
+        }
       }
-
-      // This function is called when someone finishes with the Login
-      // Button.  See the onlogin handler attached to it in the sample
-      // code below.
-      function checkLoginState() {
-          FB.getLoginStatus(function(response) {
-              statusChangeCallback(response);
-          });
-      }
-
-      window.fbAsyncInit = function() {
-          FB.init({
-              appId: '{your-app-id}',
-              cookie: true, // enable cookies to allow the server to access
-              // the session
-              xfbml: true, // parse social plugins on this page
-              version: 'v2.8' // use graph api version 2.8
-          });
-
-          // Now that we've initialized the JavaScript SDK, we call
-          // FB.getLoginStatus().  This function gets the state of the
-          // person visiting this page and can return one of three states to
-          // the callback you provide.  They can be:
-          //
-          // 1. Logged into your app ('connected')
-          // 2. Logged into Facebook, but not your app ('not_authorized')
-          // 3. Not logged into Facebook and can't tell if they are logged into
-          //    your app or not.
-          //
-          // These three cases are handled in the callback function.
-
-          FB.getLoginStatus(function(response) {
-              statusChangeCallback(response);
-          });
-
-      };
-
-      // Load the SDK asynchronously
-      (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "//connect.facebook.net/en_US/sdk.js";
-          fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-
-      // Here we run a very simple test of the Graph API after login is
-      // successful.  See statusChangeCallback() for when this call is made.
-      function testAPI() {
-          console.log('Welcome!  Fetching your information.... ');
-          FB.api('/me', function(response) {
-              console.log('Successful login for: ' + response.name);
-              document.getElementById('status').innerHTML =
-                  'Thanks for logging in, ' + response.name + '!';
-          });
-      }
-
-    },
-    methods: {},
-    components: {}
+  },
+  computed: {},
+  created() {},
+  methods: {
+    login () {
+      const self = this
+      this.$showSpinner()
+      Authentication.logIn(this.user, loggedUser => {
+        console.log(loggedUser)
+        self.$hideSpinner()
+        self.$router.push('/')
+      }, (error) => {
+        self.$hideSpinner()
+        self.$displayDialog('No se pudo iniciar sesión', 'Verificá los datos ingresados.')
+      })
+    }
+  },
+  components: {}
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.img-container {
+  margin: 50px auto;
+}
+
+.img-container img {
+  box-shadow: 4px 4px 4px #CCC, -4px 4px 4px #CCC;
+  border-radius: 10px;
+}
+
+.inputs-row {
+  margin: 12px 0px 0 0px;
+}
+
+.btn-signup {
+  width: 100%;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.separator-row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.separator-col {
+  height: 20px;
+}
+
+.or-separator {
+  margin-top: 10px;
+  height: 1px;
+  line-height: 1px;
+  background-color: #AAAAAA;
+}
+
+.signup-link, .signup-link:visited, .signup-link:hover {
+  font-size: 16px;
+  color: #000;
+}
 </style>

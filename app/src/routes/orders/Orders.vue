@@ -19,6 +19,9 @@
           <li v-on:click.stop="removeOrder(order)"><a>Eliminar</a></li>
           <li v-on:click.stop="finishOrder(order)"><a>Finalizar</a></li>
         </ul>
+        <div class="note-icon" v-if="order.note">
+          <img src="assets/note_icon.png" alt="" class="img-responsive">
+        </div>
       </div>
     </template>
     <router-link to="/orders/new" v-if="!readOnly">
@@ -31,6 +34,7 @@
 import AddButton from '../../components/AddButton.vue'
 import Orders from '../../models/Orders'
 import BlockUI from '../../utils/BlockUI'
+import Authentication from '../../utils/Authentication'
 
 export default {
   name: 'orders',
@@ -90,12 +94,18 @@ export default {
     finishOrder (order) {
       const self = this
       this.$displayDialog('¿Estás seguro?', 'Al marcar el pedido como Finalizado se eliminará de la lista. Luego se podrá encontrar en el resumen del día', () => {
+        const currentUser = Authentication.getCurrentUser()
         order.status = 'done'
+        order.deliveredBy = currentUser
+        console.log(order)
         Orders.update(order, response => {
           self.orders.splice(self.orders.indexOf(order), 1)
         })
       }, function () {})
     }
+  },
+  onBackAction () {
+    this.$router.push('/')
   }
 }
 </script>
@@ -158,6 +168,13 @@ export default {
   height: 50%;
   padding: 14px 14px 30px 16px;
   z-index: 20;
+}
+
+.note-icon {
+  width: 25px;
+  position: absolute;
+  right: 12px;
+  bottom: 7px;
 }
 
 .option-menu {

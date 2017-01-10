@@ -61,6 +61,9 @@ export default {
   methods: {},
   components: {
     OrdersComponent
+  },
+  onBackAction () {
+    this.$router.push('/statistics')
   }
 }
 </script>

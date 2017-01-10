@@ -9,6 +9,7 @@ import Spinner from './plugins/spinner'
 import Toast from './plugins/toast'
 import config from './config'
 import FCMHelper from './utils/FCMHelper'
+import ActionBarUtils from './components/ActionBarUtils'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
@@ -18,11 +19,11 @@ Vue.use(Spinner)
 Vue.use(Toast)
 
 const configFirebase = {
-  apiKey: 'AAAAw6qdah0:APA91bHHXU3wgFWNswugDTf9vAE32_IqV-awbuVHnKaVWf_lA55jhwgK4l72_Q31S-EnK2b4pSMZdY92AW8oYqQNQ_Xlhl5HOhJuiwFYbUwKEdqei1AFCA6Vv89wzCGAOmIYPa9T9HIx9qnP53A1awqoToBiCe5t2A',
-  authDomain: 'misol-6a00d.firebaseapp.com',
-  databaseURL: 'https://misol-6a00d.firebaseio.com',
-  storageBucket: 'misol-6a00d.appspot.com',
-  messagingSenderId: '840381065757'
+  apiKey: "AIzaSyD19z0gXXeUjht28_9HkJLGLRDfpq8kkqs",
+  authDomain: "misol-6a00d.firebaseapp.com",
+  databaseURL: "https://misol-6a00d.firebaseio.com",
+  storageBucket: "misol-6a00d.appspot.com",
+  messagingSenderId: "840381065757"
 }
 
 firebase.initializeApp(configFirebase)
@@ -46,6 +47,16 @@ messaging.requestPermission()
 
 const router = new VueRouter({
   routes: routes
+})
+
+// inject a handler for `myOption` custom option
+Vue.mixin({
+  created: function () {
+    var onBackAction = this.$options.onBackAction
+    if (onBackAction) {
+      ActionBarUtils.setBackAction(onBackAction.bind(this))
+    }
+  }
 })
 
 /* eslint-disable no-new */

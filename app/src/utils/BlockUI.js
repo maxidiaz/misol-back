@@ -11,7 +11,9 @@ const modalCSS = {
     overflow: 'hidden',
     outline: 0,
     display: 'block',
-    background: 'rgba(0,0,0,0.8)'
+    opacity: 0,
+    background: 'rgba(0,0,0,0.8)',
+    transition: 'opacity 5s ease'
 }
 $modal.css(modalCSS)
 
@@ -33,8 +35,26 @@ const removeDialog = function() {
     $modal.remove()
 }
 
+const blockUI = function(noActionBar) {
+    $text.remove()
+    if (noActionBar) {
+      $modal.css('top', 50)
+    }
+    $(document.body).append($modal)
+    $modal.css('opacity', 1)
+}
+
+const unblockUI = function() {
+    removeDialog()
+}
+
+const toggleBlockUI = function(block, noActionBar) {
+    block ? blockUI(noActionBar) : unblockUI()
+}
+
 const showSpinner = function() {
     $(document.body).append($modal)
+    $modal.css('opacity', 1)
 }
 
 const hideSpinner = function() {
@@ -43,5 +63,8 @@ const hideSpinner = function() {
 
 export default {
   showSpinner,
-  hideSpinner
+  hideSpinner,
+  blockUI,
+  unblockUI,
+  toggleBlockUI
 }

@@ -65,6 +65,7 @@ import moment from 'moment'
 import FCMHelper from '../../../utils/FCMHelper'
 import config from '../../../config'
 import {newOrderNotification} from '../../../utils/Notifications'
+import Authentication from '../../../utils/Authentication'
 
 export default {
   name: 'new-order',
@@ -149,15 +150,19 @@ export default {
     },
     saveOrder () {
       const self = this
+      const currentUser = Authentication.getCurrentUser()
       this.order.price = this.total
       this.order.datetime = moment(this.date + ' ' + this.time).toDate()
       this.order.status = 'pending'
+      this.order.createdBy = currentUser
       this.$showSpinner()
       Orders.save(this.order, response => {
         //self.$socket.emit('new-order', response.body.data)
         self.$hideSpinner()
         FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
         self.$router.push('/orders')
+      }, error => {
+        self.$displayDialog('Oops!', 'Hubo un error al crear la orden. Por favor volvé a intentar.')
       })
     }
   },

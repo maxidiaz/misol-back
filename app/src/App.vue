@@ -1,6 +1,6 @@
 <template>
 <div id="app">
-  <action-bar></action-bar>
+  <action-bar v-show="noLoginNorSignup"></action-bar>
   <transition name="slide-fade" mode="out-in">
   <keep-alive>
       <router-view v-if="$route.meta.keepAlive"></router-view>
@@ -16,6 +16,14 @@ import ActionBar from './components/ActionBar.vue'
 
 export default {
   name: 'app',
+  computed: {
+    noLoginNorSignup () {
+      return this.$route.path !== '/login'
+    }
+  },
+  created () {
+    console.log(this.$route.path)
+  },
   sockets: {
     newOrder (newOrder) {
       const self = this

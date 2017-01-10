@@ -4,17 +4,35 @@ const save = {
     handler(req, res) {
         const data = req.payload;
         if (data.name) {
-            const variety = new Variety(req.payload)
-            variety.save()
-                .then(variety => {
-                    res({
-                        status: 'OK',
-                        data: variety
-                    })
-                })
+          Variety.findOne({name: data.name}, (err, varieties) => {
+            if (err) {
+              res({
+                  status: 'FAIL',
+                  errorCode: 1001,
+                  errorMessage: err
+              }).code(406)
+            }
+            if (varieties) {
+              res({
+                  status: 'FAIL',
+                  errorCode: 1002,
+                  errorMessage: 'Ya existe una variedad de nombre ' + data.name
+              }).code(406)
+            } else {
+              const variety = new Variety(req.payload)
+              variety.save()
+                  .then(variety => {
+                      res({
+                          status: 'OK',
+                          data: variety
+                      })
+                  })
+            }
+          })
         } else {
             res({
                 status: 'FAIL',
+                errorCode: 1000,
                 errorMessage: 'Variety must have a name'
             })
         }

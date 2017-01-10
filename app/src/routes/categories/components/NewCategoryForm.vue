@@ -58,11 +58,17 @@ export default {
       accept (event) {
         event.preventDefault()
         const self = this
+        const currentUser = Authentication.getCurrentUser()
+        if (!this.categoryName) {
+          this.$displayDialog('Ojo!', 'Dale un nombre a la categoría')
+          return
+        }
         if (this.categoryPrice) {
           if (!this.categoryToUpdate) {
             const newCategory = {
                 name: Utils.upperCaseFirstLetter(this.categoryName),
-                price: this.categoryPrice
+                price: this.categoryPrice,
+                createdBy: currentUser
             }
             this.$displayDialog('¿Estás seguro?', 'Se guardará una nueva variedad ' + newCategory.name + '.', function () {
               self.$showSpinner()
@@ -82,6 +88,7 @@ export default {
             }else {
               this.categoryToUpdate.name = Utils.upperCaseFirstLetter(this.categoryName)
               this.categoryToUpdate.price = this.categoryPrice
+              this.updatedBy = currentUser
               this.$displayDialog('¿Estás seguro?','Se actualizarán los datos de la variedad ' +  this.categoryToUpdate.name, function() {
                 self.$showSpinner()
                 Category.update(self.categoryToUpdate, (rps) => {
@@ -96,7 +103,7 @@ export default {
             }
           }
         } else {
-            this.$displayDialog('Ojo!', 'No creo que los sanguches sean gratis <br><img style="display: block; margin: 0 auto" src="/assets/awesome-face.png" />')
+            this.$displayDialog('Ojo!', 'No creo que los sanguches sean gratis <br><img style="display: block; margin: 15px auto" src="/assets/awesome-face.png" />')
         }
       }
     },

@@ -45,6 +45,13 @@ const update = {
         order.status = data.status
         if (order.status === 'done') {
           order.deliveredOn = moment.utc().format()
+          order.varieties.map(variety => {
+            require('../models/Variety').findById(variety._id)
+              .then(v => {
+                v.totalSold += variety.count
+                v.save()
+              })
+          })
         }
         order.save()
             .then(order => {

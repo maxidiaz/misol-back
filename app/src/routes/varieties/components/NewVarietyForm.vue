@@ -32,6 +32,7 @@ import PopUpWindow from '../../../components/PopUpWindow.vue'
 import Variety from '../../../models/Variety'
 import UpperCaseFilter from '../../../directives/UpperCaseFilter'
 import Utils from '../../../utils/Utils'
+import Authentication from '../../../utils/Authentication'
 
 export default {
   name: 'new-variety-form',
@@ -52,15 +53,23 @@ export default {
     },
     accept (event) {
       event.preventDefault()
-      const newVariety = {
-        name: Utils.upperCaseFirstLetter(this.varietyName),
-        category: this.selectedCategory
+      if (this.varietyName) {
+        const currentUser = Authentication.getCurrentUser()
+        const newVariety = {
+          name: Utils.upperCaseFirstLetter(this.varietyName),
+          category: this.selectedCategory,
+          createdBy: currentUser
+        }
+        Variety.save(newVariety, (variety) => {
+          this.showWindow = false
+          this.$emit('popupWindowClose')
+          this.$emit('varietySaved', variety)
+        }, error => {
+          this.$displayDialog('Oops!', error.data.errorMessage)
+        })
+      } else {
+        this.$displayDialog('Ojo!', 'Tenés que darle un nombre a la variedad')
       }
-      Variety.save(newVariety, (variety) => {
-        this.showWindow = false
-        this.$emit('popupWindowClose')
-        this.$emit('varietySaved', variety)
-      })
     }
   },
   components: {

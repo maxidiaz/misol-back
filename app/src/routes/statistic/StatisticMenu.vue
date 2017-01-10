@@ -26,6 +26,9 @@ export default {
   methods: {},
   components: {
     RouterMenu
+  },
+  onBackAction () {
+    this.$router.push('/')
   }
 }
 </script>

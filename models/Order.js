@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const varietySchema = require('./Variety').schema
+const userSchema = require('./User').schema
 varietySchema.add({count: Number})
 
 const orderSchema = new Schema({
@@ -13,7 +14,9 @@ const orderSchema = new Schema({
   note: String,
   pay: Number,
   status: String,
-  paid: Boolean
+  paid: Boolean,
+  createdBy: userSchema,
+  deliveredBy: userSchema
 }, {
   timestamps: true
 })
