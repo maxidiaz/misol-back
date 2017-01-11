@@ -11,6 +11,7 @@ import StatsOnDate from './routes/statistic/StatsOnDate.vue'
 import Settings from './routes/settings/Settings.vue'
 import SignUp from './routes/signup/SignUp.vue'
 import Login from './routes/login/Login.vue'
+import RecentTransactions from './routes/statistic/RecentTransactions.vue'
 
 const routes = [
   {path: '/', component: Home},
@@ -25,6 +26,7 @@ const routes = [
   {path: '/statistics', component: StatisticMenu},
   {path: '/statistics/daily/:date', component: DailyStats},
   {path: '/statistics/stats-on-date', component: StatsOnDate},
+  {path: '/statistics/recent-transactions', component: RecentTransactions},
   {path: '/settings', component: Settings}
 ]
 

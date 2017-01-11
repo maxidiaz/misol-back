@@ -69,10 +69,10 @@ export default {
     categorySaved (category) {
       normalizeCategory (category, this)
       this.categories.push(category)
-      this.$showToast('Variedad guardada con éxito')
+      this.$showToast('Categoría guardada con éxito')
     },
     categoryUpdated (category) {
-      this.$showToast('Variedad actualizada correctamente')
+      this.$showToast('Categoría actualizada correctamente')
     },
     updateCategory (category) {
       this.categoryToUpdate = category
@@ -80,12 +80,12 @@ export default {
     },
     deleteCategory (category) {
       const self = this
-      this.$displayDialog('¿Estás seguro?', 'La variedad ' + category.name + ' será eliminada. Esta acción no se puede revertir.', () => {
+      this.$displayDialog('¿Estás seguro?', 'La categoría ' + category.name + ' será eliminada. Esta acción no se puede revertir.', () => {
         self.$showSpinner()
         Category.remove(category._id, response => {
           self.$hideSpinner()
           self.categories.splice(self.categories.indexOf(category), 1)
-          self.$showToast('Variedad ' + category.name + ' eliminada.')
+          self.$showToast('Categoría ' + category.name + ' eliminada.')
         })
       }, true)
     }

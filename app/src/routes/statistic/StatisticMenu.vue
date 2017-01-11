@@ -18,6 +18,9 @@ export default {
       },{
         name: 'Resumen en fecha',
         path: '/statistics/stats-on-date'
+      },{
+        name: 'Últimos movimientos',
+        path: '/statistics/recent-transactions'
       }]
     }
   },

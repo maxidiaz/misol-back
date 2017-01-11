@@ -15,14 +15,15 @@
                     <input type="number" v-model="categoryPrice" name="name" placeholder="$" class="form-control"/>
                 </div>
             </div>
-            <div class="row bottom-buttons">
-                <div class="col-xs-12">
-                    <button type="button" class="button btn-default" name="cancel" v-on:click="cancel">CANCELAR</button>
-                    <button type="button" class="button btn-primary" name="accept" v-on:click="accept">ACEPTAR</button>
-                </div>
-            </div>
+    </div>
+    <div class="row bottom-buttons">
+        <div class="col-xs-12">
+            <button type="button" class="button btn-default" name="cancel" v-on:click="cancel">CANCELAR</button>
+            <button type="button" class="button btn-primary" name="accept" v-on:click="accept">ACEPTAR</button>
+        </div>
     </div>
     </form>
+
 </pop-up-window>
 </template>
 
@@ -30,6 +31,7 @@
 import PopUpWindow from '../../../components/PopUpWindow.vue'
 import Category from '../../../models/Category'
 import Utils from '../../../utils/Utils'
+import Authentication from '../../../utils/Authentication'
 
 export default {
     name: 'new-category-form',
@@ -70,7 +72,7 @@ export default {
                 price: this.categoryPrice,
                 createdBy: currentUser
             }
-            this.$displayDialog('¿Estás seguro?', 'Se guardará una nueva variedad ' + newCategory.name + '.', function () {
+            this.$displayDialog('¿Estás seguro?', 'Se guardará una nueva categoría ' + newCategory.name + '.', function () {
               self.$showSpinner()
               Category.save(newCategory, (rps) => {
                 self.$hideSpinner()
@@ -88,8 +90,8 @@ export default {
             }else {
               this.categoryToUpdate.name = Utils.upperCaseFirstLetter(this.categoryName)
               this.categoryToUpdate.price = this.categoryPrice
-              this.updatedBy = currentUser
-              this.$displayDialog('¿Estás seguro?','Se actualizarán los datos de la variedad ' +  this.categoryToUpdate.name, function() {
+              this.categoryToUpdate.updatedBy = currentUser
+              this.$displayDialog('¿Estás seguro?','Se actualizarán los datos de la categoría ' +  this.categoryToUpdate.name, function() {
                 self.$showSpinner()
                 Category.update(self.categoryToUpdate, (rps) => {
                   self.$hideSpinner()
@@ -103,7 +105,7 @@ export default {
             }
           }
         } else {
-            this.$displayDialog('Ojo!', 'No creo que los sanguches sean gratis <br><img style="display: block; margin: 15px auto" src="/assets/awesome-face.png" />')
+            this.$displayDialog('Ojo!', 'No creo que los sandwiches sean gratis <br><img style="display: block; margin: 15px auto" src="/assets/awesome-face.png" />')
         }
       }
     },

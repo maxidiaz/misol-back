@@ -13,7 +13,6 @@ const listBy = debounce((filter, cb, cbError) => {
 }, 300)
 
 const save = debounce((variety, cb, cbError) => {
-  variety.totalSold = 0
   Vue.http.post(restUrl + '/variety', variety).then(cb, cbError)
 }, 300)
 

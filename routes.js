@@ -2,6 +2,7 @@ const VarietyController = require('./controllers/VarietyController')
 const OrderController = require('./controllers/OrderController')
 const CategoryController = require('./controllers/CategoryController')
 const UserController = require('./controllers/UserController')
+const RecentTransactionsController = require('./controllers/RecentTransactionsController')
 
 const apiPrefix = '/api'
 
@@ -55,7 +56,9 @@ const routes = [
   {method:'POST',path: apiPrefix + '/user',config:UserController.save},
   {method:'GET',path: apiPrefix + '/user',config:UserController.list},
   {method:'GET',path: apiPrefix + '/user/{username}',config:UserController.find},
-  {method:'DELETE',path: apiPrefix + '/user/{username}',config:UserController.remove}
+  {method:'DELETE',path: apiPrefix + '/user/{username}',config:UserController.remove},
+
+  {method:'GET',path: apiPrefix + '/recent',config:RecentTransactionsController.list},
 
 ]
 

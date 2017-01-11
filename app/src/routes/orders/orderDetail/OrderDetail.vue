@@ -63,6 +63,7 @@
 import Orders from '../../../models/Orders'
 import moment from 'moment'
 import BlockUI from '../../../utils/BlockUI'
+import Authentication from '../../../utils/Authentication'
 
 export default {
   name: 'order-detail',
@@ -90,6 +91,7 @@ export default {
     changeOrderStatus (status) {
       const self = this
       this.order.status = status
+      this.order.user = Authentication.getCurrentUser()
       Orders.update(this.order, response => {
         self.order.status = response.body.data.status
       })
@@ -107,6 +109,9 @@ export default {
       }
       return quantity
     }
+  },
+  onBackAction () {
+    this.$router.push('/orders')
   }
 }
 </script>

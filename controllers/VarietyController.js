@@ -1,4 +1,6 @@
 const Variety = require('../models/Variety')
+const RecentTransactions = require('../models/RecentTransactions')
+const moment = require('moment')
 
 const save = {
     handler(req, res) {
@@ -22,6 +24,13 @@ const save = {
               const variety = new Variety(req.payload)
               variety.save()
                   .then(variety => {
+                      new RecentTransactions({
+                        user : variety.createdBy,
+                        message: variety.createdBy.displayName + ' agregó la variedad ' + variety.name,
+                        action: 'ADD-VARIETY',
+                        actionId : variety._id,
+                        date : moment.utc().format()
+                      }).save()
                       res({
                           status: 'OK',
                           data: variety
@@ -69,9 +78,19 @@ const find = {
 
 const remove = {
     handler(req, res) {
-        res(Variety.findOneAndRemove({
-            "_id": req.params.id
-        }))
+      Variety.findOneAndRemove({
+          "_id": req.params.id
+      }, (err, variety) => {
+        new RecentTransactions({
+          message: 'La variedad ' + variety.name + ' fue eliminada.',
+          action: 'REMOVE-VARIETY',
+          date : moment.utc().format()
+        }).save()
+        res({
+          status: 'OK',
+          data: variety
+        })
+      })
     }
 }
 

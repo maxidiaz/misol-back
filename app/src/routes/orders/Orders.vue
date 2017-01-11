@@ -1,8 +1,9 @@
 <template>
   <div id="orders" class="container">
-    <p v-if="orders.length == 0">
-      No se ha realizado ning&uacute;n pedido a&uacute;n
-    </p>
+    <div v-if="orders.length == 0">
+      <h3>No hay ning&uacute;n pedido por el momento</h3>
+      <img src="/assets/sad.png" alt="" style="margin-top: 50px">
+    </div>
     <template v-for="order in orders" v-if="orders.length != 0">
       <div class="card" v-on:click="seeDetails(order._id, $event)">
         <div class="status-color"

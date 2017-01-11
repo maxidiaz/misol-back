@@ -35,7 +35,7 @@ messaging.requestPermission()
     return messaging.getToken()
   })
   .then(function (token) {
-    FCMHelper.subscribeToTopic(token, 'mi-sol')
+    FCMHelper.subscribeToTopic(token, 'mi-sol2')
   })
   .catch(function (err) {
     console.log('Unable to get permission to notify.', err)

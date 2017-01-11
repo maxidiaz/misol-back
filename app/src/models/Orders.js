@@ -17,7 +17,6 @@ const listByDate = debounce((params, cb, cbError) => {
 }, 300)
 
 const save = debounce((order, cb, cbError) => {
-  order.deliveredBy = {}
   Vue.http.post(restUrl + '/order', order).then(cb, cbError)
 }, 300)
 

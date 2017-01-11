@@ -8,7 +8,7 @@ const list = debounce((cb, cbError) => {
   Vue.http.get(restUrl + '/category').then(cb)
 }, 300)
 
-const save = debounce((category, cb, cbError) => {
+const save = debounce((category, cb, cbError) => {  
   Vue.http.post(restUrl + '/category', category).then(cb)
 }, 300)
 

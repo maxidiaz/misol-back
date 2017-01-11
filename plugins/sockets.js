@@ -1,6 +1,6 @@
 exports.register = function (server, options, next) {
 
-    var io = require('socket.io')(server.listener);
+    var io = require('socket.io').listen(server.listener);
 
     io.sockets.on('connection', function (socket) {
 

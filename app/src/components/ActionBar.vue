@@ -111,16 +111,20 @@ export default {
 
 
 
-<style>
+<style scoped>
+.navbar {
+  border-radius: 0;
+}
+
 .back-btn-container {
   float: left;
   margin-left: 20px;
-  margin-top: 10px;
+  margin-top: 13px;
 }
 
 .back-btn {
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 
 .logout-btn {

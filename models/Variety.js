@@ -6,7 +6,7 @@ const userSchema = require('./User').schema
 const varietySchema = new Schema({
     name: String,
     category: {type: Schema.ObjectId, ref: 'category'},
-    totalSold: Number,
+    totalSold: {type: Number, default: 0},
     createdBy: userSchema
 })
 
