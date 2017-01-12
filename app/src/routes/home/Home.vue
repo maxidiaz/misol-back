@@ -1,7 +1,10 @@
 <template>
 <div class="container">
   <router-menu :menuItems="menuItems"></router-menu>
-  <p class="madeby">Hecho por Maxi <img src="/assets/awesome-face.png" alt=""></p>
+  <div class="madeby">
+    <p>Hecho por Maxi <img src="/assets/awesome-face.png" alt=""></p>
+    <p style="margin-top: 20px">Versión 1.0.1</p>
+  </div>
 </div>
 </template>
 
