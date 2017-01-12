@@ -1,6 +1,7 @@
 <template>
 <div class="container">
   <router-menu :menuItems="menuItems"></router-menu>
+  <p class="madeby">Hecho por Maxi <img src="/assets/awesome-face.png" alt=""></p>
 </div>
 </template>
 
@@ -39,5 +40,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.madeby {
+  margin-top: 500px;
+  font-size: 16px;
+}
+
+.madeby img {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+}
 </style>
