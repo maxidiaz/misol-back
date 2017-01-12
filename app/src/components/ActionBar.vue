@@ -49,6 +49,8 @@ export default {
   name: 'action-bar',
   data () {
     return {
+      currentRoute: '',
+      previousRoute: '',
       currentUser: {},
       menuItems: config.homeMenu,
       sideMenuVisible: false
@@ -64,6 +66,7 @@ export default {
   },
   mounted () {
     const self = this
+    this.currentRoute = this.$route.path
     actionBarBus.$on('loggedUser', user => {
       self.currentUser = user
     })

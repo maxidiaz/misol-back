@@ -21,7 +21,7 @@ const routes = [
   {path: '/varieties/:variety', component: Varieties},
   {path: '/orders', component: Orders},
   {path: '/orders/detail/:id', component: OrderDetail},
-  {path: '/orders/new', component: NewOrder, meta: {keepAlive: true}},
+  {path: '/orders/new', component: NewOrder},
   {path: '/options', component: Options},
   {path: '/statistics', component: StatisticMenu},
   {path: '/statistics/daily/:date', component: DailyStats},

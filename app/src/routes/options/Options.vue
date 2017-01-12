@@ -35,6 +35,9 @@ export default {
   },
   components: {
     SearchBar
+  },
+  onBackAction () {
+    this.$router.push('/orders/new')
   }
 }
 </script>

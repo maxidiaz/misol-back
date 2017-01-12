@@ -24,7 +24,7 @@ export default {
     Datepicker
   },
   onBackAction () {
-    this.$router.push('/')
+    this.$router.push('/statistics')
   }
 }
 </script>

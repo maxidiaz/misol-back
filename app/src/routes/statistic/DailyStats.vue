@@ -1,19 +1,17 @@
 <template lang="html">
-  <div class="daily-status-container">
+  <div class="daily-status-container container">
     <h3 v-if="dateSelected">{{dateSelected}}</h3>
     <h4 class="subtitle">Pedidos entregados:</h4>
-    <orders-component :readOnly="true" :ordersProp="orders"></orders-component>
+    <order-list :readOnly="true" :orders="orders"></order-list>
     <h4 class="subtitle">Total vendido:</h4>
-    <div class="margin16">
-      <div class="card">
-        <p class="no-margin"><strong style="font-size: 24px">${{total}}</strong></p>
-      </div>
+    <div class="card">
+      <p class="no-margin"><strong style="font-size: 24px">${{total}}</strong></p>
     </div>
   </div>
 </template>
 
 <script>
-import OrdersComponent from '../orders/Orders.vue'
+import OrderList from '../orders/orderList/OrderList.vue'
 import Orders from '../../models/Orders'
 import moment from 'moment'
 import BlockUI from '../../utils/BlockUI'
@@ -60,7 +58,7 @@ export default {
   },
   methods: {},
   components: {
-    OrdersComponent
+    OrderList
   },
   onBackAction () {
     this.$router.push('/statistics')
@@ -72,7 +70,7 @@ export default {
 .subtitle {
   text-align: left;
   font-weight: bold;
-  margin: 20px 0 0 16px;
+  margin: 20px 0;
 }
 
 .daily-status-container {

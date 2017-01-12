@@ -171,6 +171,9 @@ export default {
   },
   components: {
     CountInputModal
+  },
+  onBackAction () {
+    this.$router.push('/orders')
   }
 }
 </script>

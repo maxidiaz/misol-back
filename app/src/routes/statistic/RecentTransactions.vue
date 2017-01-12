@@ -6,7 +6,7 @@
       <img src="/assets/sad.png" alt="" style="margin-top: 50px">
     </div>
     <div class="card" v-if="recents.length" v-for="recent in recents" v-on:click="handleClick(recent)">
-      <img :src="recent.user.photoURL" class="profile-avatar">
+      <img v-if="recent.user" :src="recent.user.photoURL" class="profile-avatar">
       <span class="from-now-text">{{fromNow(recent.date)}}</span>
       <div class="transaction-text-container">
         <p>{{recent.message}}</p>
@@ -72,7 +72,10 @@ export default {
       })
     }
   },
-  components: {}
+  components: {},
+  goBackAction () {
+    this.$router.push('/statistics')
+  }
 }
 </script>
 
