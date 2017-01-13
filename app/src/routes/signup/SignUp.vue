@@ -9,7 +9,7 @@
           <label for="image-upload" class="add-avatar-btn">+</label>
         </div>
       </div>
-      <input type="file" id="image-upload" style="display:none" accept="image/*" v-on:change="readURL"/>
+      <input type="file" id="image-upload" style="display: none" accept="image/*" v-on:change="readURL"/>
       <pop-up-window :show="showCropper">
         <div class="crop-img-container">
           <vue-cropper
@@ -50,6 +50,7 @@ import Auth from '../../utils/Authentication'
 import PopUpWindow from '../../components/PopUpWindow.vue'
 import Cropper from 'cropperjs'
 import VueCropper from 'vue-cropperjs'
+import UserController from '../../models/Users'
 
 export default {
   name: 'sign-up',
@@ -71,14 +72,28 @@ export default {
   methods: {
     signup () {
       const self = this
-      this.$showSpinner()
-      Auth.signUp(this.user, signupUser => {
-        self.$router.push('/')
-        self.$hideSpinner()
-      }, error => {
-        self.$hideSpinner()
-        self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
-      })
+      if (this.user.photoURL != '/assets/profile_avatar_default.png') {
+        this.$showSpinner()
+        UserController.uploadFile({
+          displayName: this.user.displayName,
+          photoURL: this.user.photoURL
+        }, (response) => {
+          console.log(response)
+          this.user.photoURL = response.data.data.avatarUrl
+          Auth.signUp(self.user, signupUser => {
+            self.$router.push('/')
+            self.$hideSpinner()
+          }, error => {
+            self.$hideSpinner()
+            self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
+          })
+        }, error => {
+          self.$hideSpinner()
+          self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
+        })
+      } else {
+        self.$displayDialog('Falta la foto!', 'Elegí una foto para tu usuario')
+      }
     },
     readURL(e) {
       const self = this

@@ -107,7 +107,7 @@ function normalizeCategory (category, vm) {
       vm.deleteCategory(category)
     }
   }]
-  category.path = 'varieties/' + Utils.toKebabCase(category.name)
+  category.path = '/varieties/' + category._id
 }
 </script>
 

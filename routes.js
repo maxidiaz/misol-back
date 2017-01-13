@@ -53,12 +53,14 @@ const routes = [
   {method:'DELETE',path: apiPrefix + '/order/{id}',config:OrderController.remove},
 
   // Users
-  {method:'POST',path: apiPrefix + '/user',config:UserController.save},
+  /*{method:'POST',path: apiPrefix + '/user',config:UserController.save},
   {method:'GET',path: apiPrefix + '/user',config:UserController.list},
   {method:'GET',path: apiPrefix + '/user/{username}',config:UserController.find},
-  {method:'DELETE',path: apiPrefix + '/user/{username}',config:UserController.remove},
+  {method:'DELETE',path: apiPrefix + '/user/{username}',config:UserController.remove},*/
 
   {method:'GET',path: apiPrefix + '/recent',config:RecentTransactionsController.list},
+
+  {method:'POST',path: apiPrefix + '/imageUpload',config:UserController.saveImage}
 
 ]
 

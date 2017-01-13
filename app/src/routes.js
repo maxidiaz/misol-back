@@ -18,7 +18,7 @@ const routes = [
   {path: '/login', component: Login},
   {path: '/signup', component: SignUp},
   {path: '/categories', component: CategoriesMenu},
-  {path: '/varieties/:variety', component: Varieties},
+  {path: '/varieties/:category', component: Varieties},
   {path: '/orders', component: Orders},
   {path: '/orders/detail/:id', component: OrderDetail},
   {path: '/orders/new', component: NewOrder},

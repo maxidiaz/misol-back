@@ -1,87 +1,30 @@
-const User = require('../models/User')
+const fs = require("fs")
 
-const save = {
-    handler(req, res) {
-        const data = req.payload;
-        const user = new User(req.payload)
-        user.save()
-            .then(user => {
-                res({
-                    status: 'OK',
-                    data: {
-                      name: user.name,
-                      username: user.username,
-                      profile_img: user.profile_img
-                    }
-                })
-            })
-    }
-}
+const saveImage = {
+    handler: (req, reply) => {
+        var data = req.payload;
+        console.log(data)
+        var base64Data = data.photoURL.replace(/^data:image\/png;base64,/, "");
 
-const list = {
-    handler(req, res) {
-        User.find()
-            .exec()
-            .then(users => {
-                res({
-                    status: 'OK',
-                    data: users.map(user =>{
-                      return {
-                        name: user.name,
-                        username: user.username,
-                        profile_img: user.profile_img
-                      }
-                    })
-                })
-            })
-    }
-}
+        const fileName = '/uploads/' + data.displayName + Date.now() + '.png'
+        console.log(fileName)
 
-const update = {
-  handler (req, res) {
-    console.log(req.payload)
-    User.findById(req.params.id, (err, user) => {
-      const data = req.payload
-      user.name = data.name
-      user.price = data.price
-      user.save().then(user => {
-          res({
-              status: 'OK',
-              data: user
-          })
-      })
-    })
-  }
-}
-
-const find = {
-    handler(req, res) {
-      User.find({
-        "username": req.params.username
-      }).then(user => {
-        res({
-          status: 'OK',
-          data: {
-            name: user.name,
-            username: user.username,
-            profile_img: user.profile_img
+        fs.writeFile(__dirname + '/../app' + fileName, base64Data, 'base64', function(err) {
+          if (err) {
+            console.log(err)
+            return
           }
-        })
-      })
+          reply({
+            status: 'OK',
+            data: {
+              avatarUrl: fileName
+            }
+          })
+        });
     }
 }
 
-const remove = {
-    handler(req, res) {
-        res(User.findOneAndRemove({
-            "username": req.params.username
-        }))
-    }
-}
 
 module.exports = {
-    save,
-    list,
-    find,
-    remove
+    saveImage,
 }

@@ -54,7 +54,7 @@ export default {
   },
   beforeRouteEnter (to, from, next) {
     BlockUI.showSpinner()
-    Category.findByName(Utils.upperCaseFirstLetter(to.params.variety), response => {
+    Category.findById(to.params.category, response => {
       const selectedCategory = response.body[0]
       Variety.listBy(selectedCategory._id, response => {
         BlockUI.hideSpinner()
