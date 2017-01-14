@@ -38,6 +38,29 @@ export default {
       categories: []
     }
   },
+  sockets: {
+    newCategory (category) {
+      this.categories.push(category)
+    },
+    updatedCategory (category) {
+      console.log(category)
+      const self = this
+      this.categories.forEach((c,i) => {
+        if (c._id == category._id) {
+          normalizeCategory(category, self)
+          self.categories.splice(i, 1, category)
+        }
+      })
+    },
+    deleteCategory (categoryId) {
+      const self = this
+      this.categories.forEach((c,i) => {
+        if (c._id == categoryId) {
+          self.categories.splice(i, 1)
+        }
+      })
+    }
+  },
   beforeRouteEnter (to, from, next) {
     BlockUI.showSpinner()
     Category.list(response => {
@@ -85,6 +108,7 @@ export default {
         Category.remove(category._id, response => {
           self.$hideSpinner()
           self.categories.splice(self.categories.indexOf(category), 1)
+          self.$socket.emit('delete-category', category._id)
           self.$showToast('Categoría ' + category.name + ' eliminada.')
         })
       }, true)

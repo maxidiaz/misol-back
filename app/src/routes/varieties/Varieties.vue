@@ -48,6 +48,25 @@ export default {
       selectedCategory: {}
     }
   },
+  sockets: {
+    newVariety (variety) {
+      console.log(variety, this.selectedCategory._id)
+      if (variety.category == this.selectedCategory._id) {
+        this.varieties.push(variety)
+      }
+    },
+    deleteVariety (variety) {
+      console.log(variety)
+      const self = this
+      if (variety.category._id == this.selectedCategory._id) {
+        this.varieties.forEach((v, i) => {
+          if (v._id == variety._id) {
+            self.varieties.splice(i, 1)
+          }
+        })
+      }
+    }
+  },
   components: {
     AddButton,
     NewVarietyForm
@@ -71,7 +90,7 @@ export default {
       this.showNewVariety = true
     },
     onVarietySaved (newVariety) {
-      this.varieties.push(newVariety.body.data)
+      this.varieties.push(newVariety)
     },
     onPopupWindowClose () {
       this.showNewVariety = false
@@ -83,6 +102,7 @@ export default {
         Variety.remove(variety._id, () => {
           self.$hideSpinner()
           self.varieties.splice(self.varieties.indexOf(variety), 1)
+          self.$socket.emit('delete-variety', variety)
         })
       }, function(){})
     }

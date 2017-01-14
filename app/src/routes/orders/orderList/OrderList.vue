@@ -4,8 +4,8 @@
       <h3>No hay ning&uacute;n pedido por el momento</h3>
       <img src="/assets/sad.png" alt="" style="margin-top: 50px">
     </div>
-    <template v-for="order in orders" v-if="orders.length != 0">
-      <div class="card" v-on:click="seeDetails(order._id, $event)">
+    <transition-group name="list" tag="div">
+      <div class="card" v-on:click="seeDetails(order._id, $event)" v-for="order in orders" v-if="orders.length != 0" :key="order._id">
         <div class="status-color"
             :class="{
               pending: order.status === 'pending',
@@ -24,7 +24,7 @@
           <img src="assets/note_icon.png" alt="" class="img-responsive">
         </div>
       </div>
-    </template>
+    </transition-group>
     <router-link to="/orders/new" v-if="!readOnly">
       <add-button class="add-variety-btn"></add-button>
     </router-link>
@@ -39,12 +39,6 @@ import Authentication from '../../../utils/Authentication'
 export default {
   name:'order-list',
   props: ['readOnly','orders'],
-  sockets: {
-    newOrder (newOrder) {
-      window.alert('Nuevo pedido: ' + newOrder)
-      this.orders.push(newOrder)
-    }
-  },
   data () {
     return {
     }
@@ -71,6 +65,7 @@ export default {
         Orders.remove(order, response => {
           self.$hideSpinner()
           self.orders.splice(self.orders.indexOf(order), 1)
+          self.$socket.emit('delete-order', order._id)
         })
       }, function () {})
     },
@@ -83,6 +78,7 @@ export default {
         console.log(order)
         Orders.update(order, response => {
           self.orders.splice(self.orders.indexOf(order), 1)
+          self.$socket.emit('delete-order', order._id)
         })
       }, function () {})
     }
@@ -127,6 +123,7 @@ export default {
   width: 8px;
   height: 100%;
   border-radius: 5px 0px 0px 5px;
+  transition: background .3s ease;
 }
 
 .pending {

@@ -81,6 +81,7 @@ export default {
                 self.showWindow = false
                 self.$emit('popupWindowClose')
                 self.$emit('categorySaved', categoryRps)
+                self.$socket.emit('new-category', categoryRps)
               })
             }, true)
           } else {
@@ -100,6 +101,7 @@ export default {
                   self.showWindow = false
                   self.$emit('popupWindowClose')
                   self.$emit('categoryUpdated', categoryRps)
+                  self.$socket.emit('update-category', categoryRps)
                 })
               },true)
             }

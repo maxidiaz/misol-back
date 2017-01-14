@@ -74,6 +74,13 @@ export default {
       time: ''
     }
   },
+  sockets: {
+    updateOrderStatus (data) {
+      if (data.order == this.order._id) {
+        this.order.status = data.status
+      }
+    }
+  },
   beforeRouteEnter (to, from, next) {
     BlockUI.showSpinner()
     Orders.find(to.params.id, response => {
@@ -94,6 +101,10 @@ export default {
       this.order.user = Authentication.getCurrentUser()
       Orders.update(this.order, response => {
         self.order.status = response.body.data.status
+        self.$socket.emit('update-order-status', {
+          order: self.order._id,
+          status: status
+        })
       })
     },
     getQuantity (variety) {
@@ -160,6 +171,7 @@ export default {
   top: 0;
   border-radius: 20px;
   box-shadow: 0px 3px 3px 2px #CCC;
+  transition: background .3s ease;
 }
 
 ul .status-color {

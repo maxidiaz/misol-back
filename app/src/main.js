@@ -13,7 +13,7 @@ import ActionBarUtils from './components/ActionBarUtils'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
-Vue.use(VueSocketIO, config.restUrl)
+Vue.use(VueSocketIO, config.baseUrl)
 Vue.use(Dialog)
 Vue.use(Spinner)
 Vue.use(Toast)

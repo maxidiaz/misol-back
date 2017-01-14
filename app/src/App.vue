@@ -24,20 +24,6 @@ export default {
   created () {
     console.log(this.$route.path)
   },
-  sockets: {
-    newOrder (newOrder) {
-      const self = this
-      const Notification = window.Notification
-      /* eslint-disable no-new */
-      const notification = new Notification('Nuevo pedido', {
-        data: newOrder
-      })
-      notification.onclick = event => {
-        self.$router.push('/orders')
-        notification.close()
-      }
-    }
-  },
   components: {
     ActionBar
   }

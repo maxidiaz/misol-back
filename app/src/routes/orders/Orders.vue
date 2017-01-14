@@ -27,6 +27,26 @@ export default {
       orders: []
     }
   },
+  sockets: {
+    newOrder (order) {
+      this.orders.push(order)
+    },
+    updateOrderStatus (data) {
+      this.orders.forEach((o, i) => {
+        if (data.order == o._id) {
+          o.status = data.status
+        }
+      })
+    },
+    deleteOrder (orderId) {
+      const self = this
+      this.orders.forEach((o, i) => {
+        if (orderId == o._id) {
+          self.orders.splice(i, 1)
+        }
+      })
+    }
+  },
   components: {
     OrderList
   },

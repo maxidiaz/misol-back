@@ -160,6 +160,8 @@ export default {
         //self.$socket.emit('new-order', response.body.data)
         self.$hideSpinner()
         FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
+        self.$socket.emit('new-order', response.body.data)
+        console.log(self.$socket)
         self.$router.push('/orders')
       }, error => {
         self.$displayDialog('Oops!', 'Hubo un error al crear la orden. Por favor volvé a intentar.')

@@ -63,7 +63,8 @@ export default {
         Variety.save(newVariety, (variety) => {
           this.showWindow = false
           this.$emit('popupWindowClose')
-          this.$emit('varietySaved', variety)
+          this.$emit('varietySaved', variety.body.data)
+          this.$socket.emit('new-variety', variety.body.data)
         }, error => {
           this.$displayDialog('Oops!', error.data.errorMessage)
         })
