@@ -16,7 +16,7 @@ const sendNotification = (notification, data, topic) => {
   if (data) {
     postData.data = data
   }
-  postData.to = topic ? '/topics/' + topic : '/topics/mi-sol'
+  postData.to = topic ? '/topics/' + topic : '/topics/mi-sol2'
 
   Vue.http.post('https://fcm.googleapis.com/fcm/send', postData, {
     headers: {
