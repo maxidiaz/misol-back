@@ -5,13 +5,6 @@ const config = require('./config/config')
 const initDb = require('./initDb')();
 const corsHeaders = require('hapi-cors-headers');
 
-const fs = require('fs');
-const dir = __dirname + '/app/uploads';
-
-if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
-}
-
 mongoose.connect(config.dbConnectionUrl)
 
 server.connection(config.serverConnection)

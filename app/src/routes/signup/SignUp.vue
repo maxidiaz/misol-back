@@ -50,7 +50,7 @@ import Auth from '../../utils/Authentication'
 import PopUpWindow from '../../components/PopUpWindow.vue'
 import Cropper from 'cropperjs'
 import VueCropper from 'vue-cropperjs'
-import UserController from '../../models/Users'
+import Utils from '../../utils/Utils'
 
 export default {
   name: 'sign-up',
@@ -74,23 +74,26 @@ export default {
       const self = this
       if (this.user.photoURL != '/assets/profile_avatar_default.png') {
         this.$showSpinner()
-        UserController.uploadFile({
-          displayName: this.user.displayName,
-          photoURL: this.user.photoURL
-        }, (response) => {
-          console.log(response)
-          this.user.photoURL = response.data.data.avatarUrl
-          Auth.signUp(self.user, signupUser => {
-            self.$router.push('/')
-            self.$hideSpinner()
+        Auth.uploadAvatar(Utils.dataUriToBlob(this.user.photoURL),
+          avatarURL => {
+            Utils.urlShortener(avatarURL, shortAvatarURL => {
+              console.log(shortAvatarURL)
+              self.user.photoURL = shortAvatarURL
+              Auth.signUp(self.user, signupUser => {
+                console.log(signupUser)
+                self.$router.push('/')
+                self.$hideSpinner()
+              }, error => {
+                console.log('ppeppepepepe')
+                self.$hideSpinner()
+                self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
+              })
+            })
           }, error => {
+            console.log('papapapappa')
             self.$hideSpinner()
             self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
           })
-        }, error => {
-          self.$hideSpinner()
-          self.$displayDialog('Oops!', 'Hubo un error en la creación de usuario. Por favor volvé a intentar.')
-        })
       } else {
         self.$displayDialog('Falta la foto!', 'Elegí una foto para tu usuario')
       }
