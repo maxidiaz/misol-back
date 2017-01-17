@@ -13,7 +13,7 @@ const configuration = {
   sandwichQuantity: [3, 6, 9, 12, 24, 36, 48, 60],
   bitlyToken: '3cfde5d2b1e1d2544ca4490f749c51622e7ade89',
   showToast: true,
-  version: '1.2.0'
+  version: '1.2.1'
 }
 
 export default configuration
