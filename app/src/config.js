@@ -1,4 +1,4 @@
-const baseUrl = 'http://192.168.0.13:3000'
+const baseUrl = process.env.NODE_ENV == 'production' ? 'https://misol.herokuapp.com/api' : 'localhost:3000/api'
 
 const configuration = {
   homeMenu: [
