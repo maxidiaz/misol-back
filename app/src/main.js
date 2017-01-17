@@ -49,6 +49,11 @@ const router = new VueRouter({
   routes: routes
 })
 
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0,0)
+  next()
+})
+
 // inject a handler for `myOption` custom option
 Vue.mixin({
   created: function () {
