@@ -19,7 +19,7 @@
                     :min-container-width="250"
                     :min-container-height="180"
                     :background="true"
-                    :rotatable="false"
+                    :rotatable="true"
                     :aspectRatio="1"
                     :guides="false"
                     :toggleDragModeOnDblclick="false"
@@ -28,6 +28,7 @@
                 </vue-cropper>
         </div>
         <button type="button" style="position: absolute; top: 10px" class="btn btn-primary btn-crop" v-on:click="cropImage">Hecho</button>
+        <button type="button" style="position: absolute; top: 10px; left:10px" class="btn btn-primary btn-crop" v-on:click="rotateImage()">Girar</button>
       </pop-up-window>
       <div class="row inputs-row">
         <input type="displayName" v-model="user.displayName" class="form-control" placeholder="Nombre de usuario"/>
@@ -125,6 +126,11 @@ export default {
     cropImage() {
       this.showCropper = false
       this.user.photoURL = this.$refs.cropper.getCroppedCanvas().toDataURL();
+    },
+    rotateImage() {
+      console.log('rotate')
+      console.log(this.$refs.cropper)
+      this.$refs.cropper.rotate(45)
     },
     resizeMe(img) {
 

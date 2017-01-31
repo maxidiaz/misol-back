@@ -66,6 +66,7 @@ import FCMHelper from '../../../utils/FCMHelper'
 import config from '../../../config'
 import {newOrderNotification} from '../../../utils/Notifications'
 import Authentication from '../../../utils/Authentication'
+import ActionBarUtils from '../../../components/ActionBarUtils'
 
 export default {
   name: 'new-order',
@@ -150,22 +151,63 @@ export default {
     },
     saveOrder () {
       const self = this
-      const currentUser = Authentication.getCurrentUser()
-      this.order.price = this.total
-      this.order.datetime = moment(this.date + ' ' + this.time).toDate()
-      this.order.status = 'pending'
-      this.order.createdBy = currentUser
-      this.$showSpinner()
-      Orders.save(this.order, response => {
-        //self.$socket.emit('new-order', response.body.data)
-        self.$hideSpinner()
-        FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
-        self.$socket.emit('new-order', response.body.data)
-        console.log(self.$socket)
-        self.$router.push('/orders')
-      }, error => {
-        self.$displayDialog('Oops!', 'Hubo un error al crear la orden. Por favor volvé a intentar.')
-      })
+      if (this.order.name != '') {
+        if (this.order.varieties.length > 0) {
+          const currentUser = Authentication.getCurrentUser()
+          this.order.price = this.total
+          this.order.datetime = this.time != '' ? moment(this.date + ' ' + this.time).toDate() : moment().add(30,'minutes').toDate()
+          this.order.status = 'pending'
+          this.order.createdBy = currentUser
+          this.$showSpinner()
+          Orders.save(this.order, response => {
+            self.$hideSpinner()
+            FCMHelper.sendNotification(newOrderNotification(response.body.data), response.body.data)
+            self.$socket.emit('new-order', response.body.data)
+            self.$router.push('/orders')
+            self.reset()
+          }, error => {
+            self.$displayDialog('Oops!', 'Hubo un error al crear la orden. Por favor volvé a intentar.')
+          })
+        } else {
+          self.$displayDialog('Ojo!', 'Un pedido tiene que tener al menos un sandwich. <br><img style="display: block; margin: 15px auto" src="/assets/awesome-face.png" />')
+        }
+      } else {
+        self.$displayDialog('¿Para quién?', 'El pedido debe tener un nombre para poder identificarlo.')
+      }
+    },
+    reset () {
+      this.showQuantities = false,
+      this.currentVariety = {},
+      this.date = '',
+      this.time = '',
+      this.order = {
+        name: '',
+        varieties: [],
+        address: '',
+        datetime: '',
+        price: '',
+        note: '',
+        pay: '',
+        paid: false
+      }
+      this.date = moment(moment.now()).format('YYYY-MM-DD')
+    },
+    verifyChanges () {
+      return this.time != "" || this.order.name != "" || this.order.varieties.length > 0 || this.order.address != "" || this.order.price != "" || this.order.note != "" || this.order.pay != "" || this.order.paid != false
+    },
+    goBack () {
+      const self = this
+      console.log(this.verifyChanges())
+      if (this.verifyChanges()) {
+        this.$displayDialog('El pedido no fue guardado', '¿Desea guardar los cambios para continuar más tarde?', () => {
+          this.$router.push('/orders')
+        }, () => {
+          this.$router.push('/orders')
+          self.reset()
+        })
+      } else {
+        this.$router.push('/orders')
+      }
     }
   },
   directives: {
@@ -174,8 +216,15 @@ export default {
   components: {
     CountInputModal
   },
+  watch: {
+    '$route' : function (to, from) {
+      if (to.path == '/orders/new') {
+        ActionBarUtils.setBackAction(this.goBack)
+      }
+    }
+  },
   onBackAction () {
-    this.$router.push('/orders')
+    this.goBack()
   }
 }
 </script>

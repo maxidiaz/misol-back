@@ -10,7 +10,7 @@ const subscribeToTopic = (token, topic) => {
 }
 
 const sendNotification = (notification, data, topic) => {
-  let postData = {
+  /*let postData = {
     notification: notification
   }
   if (data) {
@@ -23,7 +23,7 @@ const sendNotification = (notification, data, topic) => {
         'Content-Type': 'application/json',
         'Authorization': 'key=AAAAw6qdah0:APA91bHHXU3wgFWNswugDTf9vAE32_IqV-awbuVHnKaVWf_lA55jhwgK4l72_Q31S-EnK2b4pSMZdY92AW8oYqQNQ_Xlhl5HOhJuiwFYbUwKEdqei1AFCA6Vv89wzCGAOmIYPa9T9HIx9qnP53A1awqoToBiCe5t2A'
     }
-  })
+  })*/
 }
 
 export default {

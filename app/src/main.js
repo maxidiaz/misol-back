@@ -10,6 +10,8 @@ import Toast from './plugins/toast'
 import config from './config'
 import FCMHelper from './utils/FCMHelper'
 import ActionBarUtils from './components/ActionBarUtils'
+import BlockUI from './utils/BlockUI'
+import Authentication from './utils/Authentication'
 
 Vue.use(VueResource)
 Vue.use(VueRouter)
@@ -50,13 +52,28 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  window.scrollTo(0,0)
-  next()
+  console.log(to.path)
+  if (to.path != '/login' && to.path != '/signup') {
+    Authentication.isUserLoggedIn(user => {
+      BlockUI.hideSpinner()
+      next()
+      window.scrollTo(0,0)
+    }, () => {
+      BlockUI.hideSpinner()
+      next({
+        path: '/login'
+      })
+      window.scrollTo(0,0)
+    })
+  }
+    next()
+    window.scrollTo(0,0)
+
 })
 
 // inject a handler for `myOption` custom option
 Vue.mixin({
-  created: function () {
+  mounted: function () {
     var onBackAction = this.$options.onBackAction
     if (onBackAction) {
       ActionBarUtils.setBackAction(onBackAction.bind(this))

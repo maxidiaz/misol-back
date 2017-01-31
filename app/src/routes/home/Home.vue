@@ -19,9 +19,7 @@ export default {
     BlockUI.showSpinner()
     Authentication.isUserLoggedIn(user => {
       BlockUI.hideSpinner()
-      next(vm => {
-        vm.user = user
-      })
+      next()
     }, () => {
       BlockUI.hideSpinner()
       next({
@@ -31,7 +29,6 @@ export default {
   },
   data () {
     return {
-      user: {},
       version: config.version,
       menuItems: config.homeMenu
     }

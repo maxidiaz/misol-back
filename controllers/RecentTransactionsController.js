@@ -4,7 +4,7 @@ const list = {
   handler (req, res) {
     console.log(req.query)
     const page = Number(req.query.page) || 0
-    const limit = Number(req.query.limit) || 15
+    const limit = Number(req.query.limit) || 10
     RecentTransactions.find()
         .limit(limit)
         .skip(page * limit)

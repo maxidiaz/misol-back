@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="container">
+  <div class="container order-detail-wrapper">
     <div class="row padding16 relative" style="padding-top: 0">
       <p class="paid-indicator" v-if="order.paid">Pago</p>
       <h2 class="title-detail">{{order.name}}</h2>
@@ -24,7 +24,7 @@
         </div>
       </template>
     </div>
-    <div>
+    <div v-if="order.address != ''">
       <h4 class="subtitle-order-detail">Direcci&oacute;n</h4>
       <div class="card no-margin">
         <span>{{order.address}}</span>
@@ -51,9 +51,9 @@
       <h4 class="subtitle-order-detail">Total</h4>
       <div class="card no-margin">
         <p><strong style="font-size: 24px">${{order.price}}</strong></p>
-        <hr>
-        <p class="text-left"><strong>Abona: </strong><span>${{order.pay}}</span></p>
-        <p class="text-left"><strong>Vuelto: </strong><span>${{order.pay - order.price}}</span></p>
+        <hr v-if="order.pay"/>
+        <p class="text-left" v-if="order.pay"><strong>Abona: </strong><span>${{order.pay}}</span></p>
+        <p class="text-left" v-if="order.pay"><strong>Vuelto: </strong><span>${{order.pay - order.price}}</span></p>
       </div>
     </div>
   </div>
@@ -128,6 +128,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.order-detail-wrapper{
+  padding-top: 70px;
+}
+
 .container {
   padding-bottom: 16px;
 }

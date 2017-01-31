@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="container">
-    <search-bar :data="options" field="name" v-on:search="onSearch"></search-bar>
+    <search-bar class="search-bar" :data="options" field="name" v-on:search="onSearch"></search-bar>
     <template v-for="option in options" v-if="option.length != 0">
       <div class="card" v-on:click="optionSelected(option)">
         <p class="title">{{option.name}}</p>
@@ -42,5 +42,8 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+.search-bar {
+  margin-top: 20px;
+}
 </style>

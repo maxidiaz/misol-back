@@ -16,6 +16,9 @@ import config from '../config'
 export default {
   name: 'count-input-modal',
   props: ['currentVariety'],
+  mounted () {
+    document.body.style.overflow = 'hidden'
+  },
   data () {
     return {
       quantities: config.sandwichQuantity
@@ -26,6 +29,9 @@ export default {
       this.currentVariety.count = quantity
       this.$emit('quantitySelected', this.currentVariety)
     }
+  },
+  beforeDestroy () {
+    document.body.style.overflow = ''
   },
   components: {}
 }

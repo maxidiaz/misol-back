@@ -3,11 +3,11 @@
   <action-bar v-show="noLoginNorSignup"></action-bar>
   <transition name="slide-fade" mode="out-in">
   <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"></router-view>
+      <router-view v-if="$route.meta.keepAlive" class="content-container"></router-view>
   </keep-alive>
   </transition>
   <transition name="slide-fade" mode="out-in">
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <router-view v-if="!$route.meta.keepAlive" class="content-container"></router-view>
 </div>
 </template>
 
@@ -37,6 +37,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.content-container {
+  padding-top: 50px;
 }
 
 .card{

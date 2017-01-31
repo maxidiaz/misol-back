@@ -1,6 +1,6 @@
 <template>
   <div id="varieties" class="container">
-    <div v-if="varieties.length == 0">
+    <div v-if="varieties.length == 0" style="margin-top: 25px">
       <p>
         Todav&iacute;a no existe ninguna variedad para esta categor&iacute;a.
       </p>

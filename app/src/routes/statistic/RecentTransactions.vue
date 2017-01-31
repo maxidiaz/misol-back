@@ -12,7 +12,7 @@
         <p>{{recent.message}}</p>
       </div>
     </div>
-    <div v-if="recents.length > 15" class="btn-show-more" v-on:click="showMore">
+    <div v-if="showMoreBtn" class="btn-show-more" v-on:click="showMore">
       <span>Ver más</span>
     </div>
   </div>
@@ -37,7 +37,8 @@ export default {
   data () {
     return {
       page: 0,
-      recents: []
+      recents: [],
+      showMoreBtn: true
     }
   },
   computed: {},
@@ -50,10 +51,14 @@ export default {
 
       switch (actionTarget) {
         case 'CATEGORY':
-          this.$router.push('/categories')
+          if (action != 'REMOVE') {
+            this.$router.push('/categories')
+          }
           break
         case 'ORDER':
-          this.$router.push('/orders/detail/' + transaction.actionId)
+          if (action != 'REMOVE') {
+            this.$router.push('/orders/detail/' + transaction.actionId)
+          }
           break
       }
     },
@@ -65,6 +70,9 @@ export default {
       BlockUI.showSpinner()
       this.page++
       Recent.list({page: this.page},recent => {
+        if (recent.data.data.length < 10) {
+          self.showMoreBtn = false
+        }
         BlockUI.hideSpinner()
         for (let i=0; i < recent.data.data.length; i++) {
           self.recents.push(recent.data.data[i])
@@ -73,7 +81,7 @@ export default {
     }
   },
   components: {},
-  goBackAction () {
+  onBackAction () {
     this.$router.push('/statistics')
   }
 }
@@ -113,5 +121,6 @@ export default {
   background-color: #337ab7;
   padding: 10px;
   color: white;
+  margin-bottom: 16px;
 }
 </style>

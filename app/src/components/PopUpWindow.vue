@@ -35,7 +35,7 @@ export default {
   right: 0;
   margin: 0;
   padding: 20px;
-  z-index: 1000;
+  z-index: 10000;
   height: 100vh;
   overflow: hidden;
   background: rgba(0,0,0,0.5);
@@ -48,5 +48,6 @@ export default {
   background-color: #FFF;
   border-radius: 10px;
   position: relative;
+  z-index: 10010;
 }
 </style>

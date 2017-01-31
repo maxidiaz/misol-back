@@ -70,14 +70,13 @@ export default {
     actionBarBus.$on('loggedUser', user => {
       self.currentUser = user
     })
-    actionBarBus.$on('backAction', action => {
+    actionBarBus.$on('onBackButton', action => {
       goBackAction = action
     })
   },
   methods: {
     goBack () {
       if (goBackAction) {
-        console.log('goBackAction');
         goBackAction()
       } else {
         this.$router.back()
@@ -117,6 +116,9 @@ export default {
 <style scoped>
 .navbar {
   border-radius: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 9999;
 }
 
 .back-btn-container {

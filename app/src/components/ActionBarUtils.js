@@ -3,8 +3,8 @@ import Vue from 'vue'
 const actionBarBus = new Vue()
 export {actionBarBus}
 
-const setBackAction = action => {
-  actionBarBus.$emit('backAction', action)
+const setBackAction = backAction => {
+  actionBarBus.$emit('onBackButton', backAction)
 }
 
 const setCurrentUser = user => {
